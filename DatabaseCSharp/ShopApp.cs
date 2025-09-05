@@ -51,9 +51,10 @@ namespace DatabaseCSharp
             while (true)
             {
                 Console.WriteLine("\n--- Meny ---");
-                Console.WriteLine("1. Visa alla produkter");
-                Console.WriteLine("2. Lägg till produkt");
-                Console.WriteLine("3. Avsluta");
+                Console.WriteLine("1. Visa alla ordrar");
+                Console.WriteLine("2. Lägg till order");
+                Console.WriteLine("3. Skapa Ticket i JIRA");
+                Console.WriteLine("4. Avsluta");
                 Console.Write("Val: ");
 
                 var choice = Console.ReadLine();
@@ -67,6 +68,7 @@ namespace DatabaseCSharp
                         AddProduct();
                         return;
                     case "3":
+                        CreateJiraTicket();
                         return;
                     default:
                         Console.WriteLine("Ogiltigt val.");
@@ -75,11 +77,20 @@ namespace DatabaseCSharp
             }
         }
 
+        // Funktion för att skapa JIRA-ticket automatiskt via API.
+        private void CreateJiraTicket()
+        {
+            Console.WriteLine("\nFunktion för att skapa JIRA-ticket är inte implementerad ännu.");
+            Console.WriteLine("Tryck på valfri tangent för att återgå till menyn...");
+            Console.ReadLine();
+            RunMenu();
+        }
+
         private void ShowAllProducts()
         {
             foreach (var product in dbContext.Products)
             {
-                Console.WriteLine($"ID: {product.Id}, Namn: {product.Name}, Pris: {product.Price}, Beskrivning: {product.Description}");
+                Console.WriteLine($"Order ID: {product.Id}, Namn: {product.Name}, Pris: {product.Price}KR, Beskrivning: {product.Description}");
             }
         }
 
