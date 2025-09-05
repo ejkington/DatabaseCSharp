@@ -25,7 +25,7 @@ namespace DatabaseCSharp
             new Product { Name = "Arctis Nova Pro Wireless for PC & PlayStation", Price = 3199, Description = "..." },
             new Product { Name = "Arctis Nova 3P Wireless for PlayStation - Black", Price = 1299, Description = "..." },
             new Product { Name = "Arctis GameBuds™ for PlayStation", Price = 1999, Description = "..." },
-            new Product { Name = "Arctis Nova 1 for PlayStation - Black", Price = 799, Description = "..." }
+            new Product { Name = "Arctis Nova 1 for PlayStation - Black", Price = 799, Description = "..."}
             };
 
             // Lägg till eller uppdatera seed-produkter
@@ -90,7 +90,7 @@ namespace DatabaseCSharp
         {
             foreach (var product in dbContext.Products)
             {
-                Console.WriteLine($"Order ID: {product.Id}, Namn: {product.Name}, Pris: {product.Price}KR, Beskrivning: {product.Description}");
+                Console.WriteLine($"Order ID: {product.Id}, Namn: {product.Name}, Pris: {product.Price}KR, Beskrivning: {product.Description}(...)");
             }
         }
 
