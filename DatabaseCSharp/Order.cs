@@ -10,7 +10,7 @@ namespace DatabaseCSharp
     {
         public int Id { get; set; }
         public DateTime OrderDate { get; set; } = DateTime.Now;
-
+        public bool SentToOT { get; set; } = false;
         public List<OrderItem> Items { get; set; } = new List<OrderItem>();
     }
 
