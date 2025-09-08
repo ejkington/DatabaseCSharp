@@ -22,10 +22,16 @@ namespace DatabaseCSharp
 
             var products = new List<Product>
             {
-            new Product { Name = "Arctis Nova Pro Wireless for PC & PlayStation", Price = 3199, Description = "..." },
-            new Product { Name = "Arctis Nova 3P Wireless for PlayStation - Black", Price = 1299, Description = "..." },
-            new Product { Name = "Arctis GameBuds™ for PlayStation", Price = 1999, Description = "..." },
-            new Product { Name = "Arctis Nova 1 for PlayStation - Black", Price = 799, Description = "..."}
+            new Product { Name = "Arctis Nova 1 Wireless for PC - Black", Price = 849, Description = "Trådlöst headset för PC med klar ljudkvalitet." },
+            new Product { Name = "Arctis Nova 5P Wired for PlayStation - Red", Price = 1099, Description = "Kabelheadset med balanserat ljud och mikrofon." },
+            new Product { Name = "Arctis Nova 3 Wireless for Xbox - Black", Price = 1799, Description = "Bekvämt headset för Xbox med lång batteritid." },
+            new Product { Name = "Arctis Nova 7 Wireless for PC & PlayStation - White", Price = 2299, Description = "Premium headset med surroundljud." },
+            new Product { Name = "Arctis Nova 9P Wireless for PlayStation - Silver", Price = 2599, Description = "High-end headset med kristallklart ljud." },
+            new Product { Name = "Arctis GameBuds™ Pro for PC & PlayStation", Price = 2199, Description = "Små, lätta earbuds med bra ljudisolering." },
+            new Product { Name = "Arctis Nova 7+ Wireless for PlayStation - Green", Price = 2099, Description = "Gamingheadset med flexibel mikrofon." },
+            new Product { Name = "Arctis 1P Wired for PlayStation - Blue", Price = 699, Description = "Prisvärt headset med bra ljud och enkel anslutning." },
+            new Product { Name = "Arctis 3P Wired for PC - Black", Price = 899, Description = "Lätt headset med balanserat ljud för gaming." },
+            new Product { Name = "Arctis Nova 9+ Wireless for PC - Gold", Price = 2699, Description = "Exklusivt headset med hög ljudkvalitet och trådlös frihet." }
             };
 
             // Lägg till eller uppdatera seed-produkter
@@ -62,10 +68,10 @@ namespace DatabaseCSharp
                 switch (choice)
                 {
                     case "1":
-                        ShowAllProducts();
+                        ShowAllOrders();
                         break;
                     case "2":
-                        AddProduct();
+                        AddOrder();
                         return;
                     case "3":
                         CreateJiraTicket();
@@ -86,43 +92,77 @@ namespace DatabaseCSharp
             RunMenu();
         }
 
-        private void ShowAllProducts()
+        private void ShowAllOrders()
         {
-            foreach (var product in dbContext.Products)
+            var orders = dbContext.Orders
+                .Include(o => o.Items)
+                .ThenInclude(i => i.Product)
+                .ToList();
+
+            foreach (var order in orders)
             {
-                Console.WriteLine($"Order ID: {product.Id}, Namn: {product.Name}, Pris: {product.Price}KR, Beskrivning: {product.Description}(...)");
+                Console.WriteLine($"\nOrder ID: {order.Id}, Datum: {order.OrderDate}");
+
+                decimal total = 0;
+                foreach (var item in order.Items)
+                {
+                    var lineTotal = item.Quantity * item.Product.Price;
+                    total += lineTotal;
+                    Console.WriteLine($"  - {item.Product.Name} x{item.Quantity} ({item.Product.Price} kr/st) = {lineTotal} kr");
+                }
+
+                Console.WriteLine($"  Totalsumma: {total} kr");
             }
+
+            Console.WriteLine("\nTryck på valfri tangent för att återgå...");
+            Console.ReadKey();
         }
 
-        private void AddProduct()
+        private void AddOrder()
         {
-            Console.Write("\nAnge namn på produkten: ");
-            var name = Console.ReadLine();
+            Console.WriteLine("\nTillgängliga produkter:");
+            var products = dbContext.Products.ToList();
 
-            Console.Write("Ange pris: ");
-            if (!decimal.TryParse(Console.ReadLine(), out var price))
+            foreach (var product in products)
             {
-                Console.WriteLine("Ogiltigt pris.");
-                return; // går direkt tillbaka till menyn
+                Console.WriteLine($"{product.Id}. {product.Name} - {product.Price} kr");
             }
 
-            Console.Write("Ange beskrivning: ");
-            var description = Console.ReadLine();
+            var order = new Order();
 
-            var newProduct = new Product
+            while (true)
             {
-                Name = name,
-                Price = price,
-                Description = description
-            };
+                Console.Write("\nAnge produkt-ID (eller lämna tomt för att slutföra): ");
+                var input = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(input)) break;
 
-            dbContext.Products.Add(newProduct);
-            dbContext.SaveChanges();
+                if (!int.TryParse(input, out var productId)) continue;
+                var product = dbContext.Products.Find(productId);
+                if (product == null) continue;
 
-            Console.WriteLine($"\n✅ Produkten \"{name}\" lades till!");
-            Console.WriteLine("Tryck på valfri tangent för att återgå till menyn...");
-            Console.ReadLine();
-            RunMenu();
+                Console.Write("Ange antal: ");
+                if (!int.TryParse(Console.ReadLine(), out var qty)) qty = 1;
+
+                order.Items.Add(new OrderItem
+                {
+                    ProductId = product.Id,
+                    Quantity = qty
+                });
+            }
+
+            if (order.Items.Count > 0)
+            {
+                dbContext.Orders.Add(order);
+                dbContext.SaveChanges();
+                Console.WriteLine("\n✅ Ordern lades till!");
+            }
+            else
+            {
+                Console.WriteLine("\n❌ Ingen order skapades.");
+            }
+
+            Console.WriteLine("Tryck på valfri tangent för att återgå...");
+            Console.ReadKey();
         }
     }
 }

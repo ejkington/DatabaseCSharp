@@ -13,6 +13,5 @@ namespace DatabaseCSharp
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }
-        // Lägg in orderdate så man har ett daatum på när ordern skapades
     }
 }
