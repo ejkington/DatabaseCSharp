@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseCSharp
 {
-    internal class ShopDbContext : DbContext
+    public class ShopDbContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseCSharp
 {
-    internal class Order
+    public class Order
     {
         public int Id { get; set; }
         public DateTime OrderDate { get; set; } = DateTime.Now;
@@ -15,7 +15,7 @@ namespace DatabaseCSharp
     }
 
 
-    internal class OrderItem
+    public class OrderItem
     {
         public int Id { get; set; }
         public int Quantity { get; set; }

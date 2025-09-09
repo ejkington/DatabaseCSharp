@@ -9,7 +9,7 @@ namespace DatabaseCSharp
 {
     internal class ShopApp
     {
-        private readonly ShopDbContext dbContext;
+        public readonly ShopDbContext dbContext;
         
         public ShopApp(ShopDbContext dbContext)
         {
@@ -92,7 +92,7 @@ namespace DatabaseCSharp
             RunMenu();
         }
 
-        private void ShowAllOrders()
+        public void ShowAllOrders()
         {
             var orders = dbContext.Orders
                 .Include(o => o.Items)
@@ -118,7 +118,7 @@ namespace DatabaseCSharp
             Console.ReadKey();
         }
 
-        private void AddOrder()
+        public void AddOrder()
         {
             Console.WriteLine("\nTillgängliga produkter:");
             var products = dbContext.Products.ToList();
@@ -154,11 +154,11 @@ namespace DatabaseCSharp
             {
                 dbContext.Orders.Add(order);
                 dbContext.SaveChanges();
-                Console.WriteLine("\n✅ Ordern lades till!");
+                Console.WriteLine("\n Ordern lades till!");
             }
             else
             {
-                Console.WriteLine("\n❌ Ingen order skapades.");
+                Console.WriteLine("\n Ingen order skapades.");
             }
 
             Console.WriteLine("Tryck på valfri tangent för att återgå...");
