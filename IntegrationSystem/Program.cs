@@ -1,4 +1,5 @@
 ﻿using DatabaseCSharp;
+using Microsoft.Data.SqlClient;
 
 namespace IntegrationSystem
 {
@@ -8,11 +9,15 @@ namespace IntegrationSystem
         {
             EasyModbus.ModbusClient modbusClient = new EasyModbus.ModbusClient("127.0.0.1", 502);
             modbusClient.Connect();
-            //Loopa läsa i databasen - för varje order
-            int orderId = 1; //Hämta från databas
-            modbusClient.WriteSingleRegister(0, orderId);
 
-            Console.WriteLine("Hello, World!");
+            // Koppla upp till databasen
+            string connectionString = "Server=localhost;Database=OrdersDB;Trusted_Connection=True;";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT Id FROM Orders WHERE SentToOT = 0";
+                SqlCommand command = new SqlCommand(query, connection);
+            }
         }
 
     }
