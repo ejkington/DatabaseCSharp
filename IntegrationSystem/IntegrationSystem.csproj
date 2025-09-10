@@ -11,8 +11,4 @@
     <PackageReference Include="EasyModbusTCP" Version="5.6.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DatabaseCSharp\DatabaseCSharp.csproj" />
-  </ItemGroup>
-
 </Project>

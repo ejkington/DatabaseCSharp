@@ -1,10 +1,13 @@
-﻿namespace OTSystem
+﻿using OrderSystemOT;
+
+namespace OTSystem
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            var otSystem = new OTSystems();
+            otSystem.Start();
         }
     }
 }
