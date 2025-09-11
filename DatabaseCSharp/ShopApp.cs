@@ -163,6 +163,7 @@ namespace DatabaseCSharp
 
             Console.WriteLine("Tryck på valfri tangent för att återgå...");
             Console.ReadKey();
+            RunMenu();
         }
     }
 }

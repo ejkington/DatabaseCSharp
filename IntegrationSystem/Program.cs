@@ -27,7 +27,7 @@ namespace IntegrationSystem
 
                     List<int> orderIds = new List<int>();
 
-                    // Hämta alla nya orders
+                    // Hämta alla nya orders med variabeln SentToOT = 0
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
