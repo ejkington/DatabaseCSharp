@@ -9,9 +9,6 @@ namespace NewOTSystem
 {
     internal class IndustrialControlSystem  
     {
-            private static double currentTemperature = 20.0;
-            private const double TargetTemperature = 25.0;
-            private static bool heaterOn = false;
             private static bool messageReceived = false;
 
             public void Run()
@@ -40,7 +37,7 @@ namespace NewOTSystem
             }
             public static void StartEasyModbusTcpSlave()
             {
-                int port = 502;
+                int port = 1503;
                 // IPAddress address = new IPAddress(new byte[] { 127, 0, 0, 1 }); // Not directly used by EasyModbusSlave
                 // EasyModbusSlave listens on all available interfaces by default if IPAddress is null or empty.
                 // Or you can specify a specific IP address string.
@@ -129,6 +126,7 @@ namespace NewOTSystem
                     modbusServer.Listen();
 
                     Console.WriteLine("EasyModbus TCP Slave started. Press any key to exit.");
+                    
                     Console.ReadKey(); // Keep the console open until a key is pressed
 
                     // --- Stop the Modbus Server ---
