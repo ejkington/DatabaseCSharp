@@ -59,7 +59,6 @@ namespace DatabaseCSharp
                 Console.WriteLine("\n--- Meny ---");
                 Console.WriteLine("1. Visa alla ordrar");
                 Console.WriteLine("2. Lägg till order");
-                Console.WriteLine("3. Skapa Ticket i JIRA");
                 Console.WriteLine("4. Avsluta");
                 Console.Write("Val: ");
 
@@ -73,23 +72,11 @@ namespace DatabaseCSharp
                     case "2":
                         AddOrder();
                         return;
-                    case "3":
-                        CreateJiraTicket();
-                        return;
                     default:
                         Console.WriteLine("Ogiltigt val.");
                         break;
                 }
             }
-        }
-
-        // Funktion för att skapa JIRA-ticket automatiskt via API.
-        private void CreateJiraTicket()
-        {
-            Console.WriteLine("\nFunktion för att skapa JIRA-ticket är inte implementerad ännu.");
-            Console.WriteLine("Tryck på valfri tangent för att återgå till menyn...");
-            Console.ReadLine();
-            RunMenu();
         }
 
         public void ShowAllOrders()
