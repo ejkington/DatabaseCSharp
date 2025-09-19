@@ -59,7 +59,7 @@ namespace DatabaseCSharp
                 Console.WriteLine("\n--- Meny ---");
                 Console.WriteLine("1. Visa alla ordrar");
                 Console.WriteLine("2. Lägg till order");
-                Console.WriteLine("4. Avsluta");
+                Console.WriteLine("3. Avsluta");
                 Console.Write("Val: ");
 
                 var choice = Console.ReadLine();
